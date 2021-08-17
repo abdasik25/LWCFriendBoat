@@ -1,4 +1,4 @@
-import { LightningElement, api,wire } from 'lwc';
+import {LightningElement, api, wire} from 'lwc';
 import labelDetails from '@salesforce/label/c.Details';
 import labelReviews from '@salesforce/label/c.Reviews';
 import labelAddReview from '@salesforce/label/c.Add_Review';
@@ -6,12 +6,14 @@ import labelFullDetails from '@salesforce/label/c.Full_Details';
 import labelPleaseSelectABoat from '@salesforce/label/c.Please_select_a_boat';
 import BOAT_ID_FIELD from '@salesforce/schema/Boat__c.Id';
 import BOAT_NAME_FIELD from '@salesforce/schema/Boat__c.Name';
-import { getRecord,getFieldValue } from 'lightning/uiRecordApi';
+import {getRecord, getFieldValue} from 'lightning/uiRecordApi';
 import BOATMC from '@salesforce/messageChannel/BoatMessageChannel__c';
-import { APPLICATION_SCOPE,MessageContext, subscribe } from 'lightning/messageService';
+import {APPLICATION_SCOPE, MessageContext, subscribe} from 'lightning/messageService';
 import BoatReviews from 'c/boatReviews';
+
 const BOAT_FIELDS = [BOAT_ID_FIELD, BOAT_NAME_FIELD];
 import {NavigationMixin} from 'lightning/navigation';
+
 export default class BoatDetailTabs extends NavigationMixin(LightningElement) {
     @api boatId;
 
@@ -30,7 +32,7 @@ export default class BoatDetailTabs extends NavigationMixin(LightningElement) {
     }
 
     // Utilize getFieldValue to extract the boat name from the record wire
-    @wire(getRecord,{recordId: '$boatId', fields: BOAT_FIELDS})
+    @wire(getRecord, {recordId: '$boatId', fields: BOAT_FIELDS})
     wiredRecord;
 
     get boatName() {
@@ -45,7 +47,9 @@ export default class BoatDetailTabs extends NavigationMixin(LightningElement) {
 
     // Subscribe to the message channel
     subscribeMC() {
-        if(this.subscription) { return; }
+        if (this.subscription) {
+            return;
+        }
         // local boatId must receive the recordId from the message
         this.subscription = subscribe(
             this.messageContext,
@@ -53,7 +57,7 @@ export default class BoatDetailTabs extends NavigationMixin(LightningElement) {
             (message) => {
                 this.boatId = message.recordId;
             },
-            { scope: APPLICATION_SCOPE }
+            {scope: APPLICATION_SCOPE}
         );
     }
 

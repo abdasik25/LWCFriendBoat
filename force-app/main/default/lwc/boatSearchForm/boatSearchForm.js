@@ -1,4 +1,4 @@
-import getBoatTypes from  '@salesforce/apex/BoatDataService.getBoatTypes';
+import getBoatTypes from '@salesforce/apex/BoatDataService.getBoatTypes';
 import {LightningElement, wire} from "lwc";
 
 export default class BoatSearchForm extends LightningElement {
@@ -7,16 +7,16 @@ export default class BoatSearchForm extends LightningElement {
     error = undefined;
     searchOptions;
 
-    @wire (getBoatTypes)
-    boatTypes({ error, data }) {
+    @wire(getBoatTypes)
+    boatTypes({error, data}) {
         if (data) {
             this.searchOptions = data.map(type => {
                 return {
-                    label : type.Name,
-                    value : type.Id
+                    label: type.Name,
+                    value: type.Id
                 };
             });
-            this.searchOptions.unshift({ label: 'All Types', value: '' });
+            this.searchOptions.unshift({label: 'All Types', value: ''});
         } else if (error) {
             this.searchOptions = undefined;
             this.error = error;

@@ -1,6 +1,6 @@
-import { LightningElement, api, track } from 'lwc';
-import { createRecord } from 'lightning/uiRecordApi';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import {LightningElement, api, track} from 'lwc';
+import {createRecord} from 'lightning/uiRecordApi';
+import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 import NAME_FIELD from '@salesforce/schema/BoatReview__c.Name';
 import COMMENT_FIELD from '@salesforce/schema/BoatReview__c.Comment__c';
 import RATING_FIELD from '@salesforce/schema/BoatReview__c.Rating__c';
@@ -50,11 +50,11 @@ export default class BoatAddReviewForm extends LightningElement {
 // Shows a toast message once form is submitted successfully
 // Dispatches event when a review is created
     handleSuccess() {
-        // TODO: dispatch the custom event and show the success message
         const evt = new ShowToastEvent({
             title: SUCCESS_TITLE,
             variant: SUCCESS_VARIANT
         });
+
         this.dispatchEvent(evt);
         this.dispatchEvent(new CustomEvent('createreview'));
         this.handleReset();

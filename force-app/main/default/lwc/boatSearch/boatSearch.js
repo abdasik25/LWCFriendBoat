@@ -1,5 +1,5 @@
-import { LightningElement , track } from 'lwc';
-import { NavigationMixin } from 'lightning/navigation'
+import {LightningElement, track} from 'lwc';
+import {NavigationMixin} from 'lightning/navigation'
 
 // imports
 export default class BoatSearch extends NavigationMixin(LightningElement) {

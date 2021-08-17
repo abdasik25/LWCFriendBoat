@@ -5,17 +5,31 @@ public with sharing class BoatDataService {
     public static final String TYPE_TYPE = 'Type';
     @AuraEnabled(cacheable=true)
     public static List<Boat__c> getBoats(String boatTypeId) {
-        // Without an explicit boatTypeId, the full list is desired
-        String query = 'SELECT '
-                + 'Name, Description__c, Geolocation__Latitude__s, '
-                + 'Geolocation__Longitude__s, Picture__c, Contact__r.Name, '
-                + 'BoatType__c, BoatType__r.Name, Length__c, Price__c '
-                + 'FROM Boat__c';
-        if (String.isNotBlank(boatTypeId)) {
-            query += ' WHERE BoatType__c = :boatTypeId';
+        if (String.isBlank(boatTypeId)) {
+            return [
+                    SELECT Id, Name, Description__c, Geolocation__Latitude__s, Geolocation__Longitude__s,
+                            Picture__c, Contact__r.Name, BoatType__c, BoatType__r.Name, Length__c, Price__c
+                    FROM Boat__c
+            ];
+        } else {
+            return [
+                    SELECT Id, Name, Description__c, Geolocation__Latitude__s, Geolocation__Longitude__s,
+                            Picture__c, Contact__r.Name, BoatType__c, BoatType__r.Name, Length__c, Price__c
+                    FROM Boat__c
+                    WHERE BoatType__c = :boatTypeId
+            ];
         }
-        query += ' WITH SECURITY_ENFORCED ';
-        return Database.query(query);
+//        // Without an explicit boatTypeId, the full list is desired
+//        String query = 'SELECT '
+//                + 'Name, Description__c, Geolocation__Latitude__s, '
+//                + 'Geolocation__Longitude__s, Picture__c, Contact__r.Name, '
+//                + 'BoatType__c, BoatType__r.Name, Length__c, Price__c '
+//                + 'FROM Boat__c';
+//        if (String.isNotBlank(boatTypeId)) {
+//            query += ' WHERE BoatType__c = :boatTypeId';
+//        }
+//        query += ' WITH SECURITY_ENFORCED ';
+//        return Database.query(query);
     }
 
     @AuraEnabled(cacheable=true)

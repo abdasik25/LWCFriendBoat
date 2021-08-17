@@ -1,6 +1,6 @@
-import { LightningElement, track, wire, api } from 'lwc';
+import {LightningElement, track, wire, api} from 'lwc';
 import getBoatsByLocation from '@salesforce/apex/BoatDataService.getBoatsByLocation';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 
 const LABEL_YOU_ARE_HERE = 'You are here!';
 const ICON_STANDARD_USER = 'standard:user';
@@ -13,8 +13,9 @@ export default class BoatsNearMe extends LightningElement {
     @track isRendered = false;
     latitude;
     longitude;
-    @wire(getBoatsByLocation, { latitude: '$latitude', longitude: '$longitude', boatTypeId: '$boatTypeId' })
-    wiredBoatsJSON({ error, data }) {
+
+    @wire(getBoatsByLocation, {latitude: '$latitude', longitude: '$longitude', boatTypeId: '$boatTypeId'})
+    wiredBoatsJSON({error, data}) {
         if (data) {
             this.createMapMarkers(data);
         } else if (error) {
@@ -28,12 +29,14 @@ export default class BoatsNearMe extends LightningElement {
             this.isLoading = false;
         }
     }
+
     renderedCallback() {
         if (this.isRendered == false) {
             this.getLocationFromBrowser();
         }
         this.isRendered = true;
     }
+
     getLocationFromBrowser() {
         navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -47,6 +50,7 @@ export default class BoatsNearMe extends LightningElement {
             }
         );
     }
+
     createMapMarkers(boatData) {
         this.mapMarkers = boatData.map(rowBoat => {
             return {

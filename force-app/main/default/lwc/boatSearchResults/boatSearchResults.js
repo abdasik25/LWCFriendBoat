@@ -1,9 +1,9 @@
-import { LightningElement, wire, api, track } from 'lwc';
+import {LightningElement, wire, api, track} from 'lwc';
 import getBoats from '@salesforce/apex/BoatDataService.getBoats';
-import { updateRecord } from 'lightning/uiRecordApi';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import { refreshApex } from '@salesforce/apex';
-import { publish, MessageContext } from 'lightning/messageService';
+import {updateRecord} from 'lightning/uiRecordApi';
+import {ShowToastEvent} from 'lightning/platformShowToastEvent';
+import {refreshApex} from '@salesforce/apex';
+import {publish, MessageContext} from 'lightning/messageService';
 import BoatMC from '@salesforce/messageChannel/BoatMessageChannel__c';
 import updateBoatList from '@salesforce/apex/BoatDataService.updateBoatList';
 
@@ -19,10 +19,10 @@ export default class BoatSearchResults extends LightningElement {
     @wire(MessageContext) messageContext;
 
     columns = [
-        { label: 'Name', fieldName: 'Name', type: 'text', editable: 'true'  },
-        { label: 'Length', fieldName: 'Length__c', type: 'number', editable: 'true' },
-        { label: 'Price', fieldName: 'Price__c', type: 'currency', editable: 'true' },
-        { label: 'Description', fieldName: 'Description__c', type: 'text', editable: 'true' }
+        {label: 'Name', fieldName: 'Name', type: 'text', editable: 'true'},
+        {label: 'Length', fieldName: 'Length__c', type: 'number', editable: 'true'},
+        {label: 'Price', fieldName: 'Price__c', type: 'currency', editable: 'true'},
+        {label: 'Description', fieldName: 'Description__c', type: 'text', editable: 'true'}
     ];
 
     @api
@@ -32,7 +32,7 @@ export default class BoatSearchResults extends LightningElement {
         this.boatTypeId = boatTypeId;
     }
 
-    @wire(getBoats, { boatTypeId: '$boatTypeId' })
+    @wire(getBoats, {boatTypeId: '$boatTypeId'})
     wiredBoats(result) {
         this.boats = result;
         if (result.error) {
@@ -50,7 +50,7 @@ export default class BoatSearchResults extends LightningElement {
 
     handleSave(event) {
         this.notifyLoading(true);
-        const recordInputs = event.detail.draftValues.slice().map(draft=>{
+        const recordInputs = event.detail.draftValues.slice().map(draft => {
             const fields = Object.assign({}, draft);
             return {fields};
         });
@@ -81,6 +81,7 @@ export default class BoatSearchResults extends LightningElement {
             this.draftValues = [];
         });
     }
+
     @api
     async refresh() {
         this.isLoading = true;
@@ -100,6 +101,6 @@ export default class BoatSearchResults extends LightningElement {
     }
 
     sendMessageService(boatId) {
-        publish(this.messageContext, BoatMC, { recordId : boatId });
+        publish(this.messageContext, BoatMC, {recordId: boatId});
     }
 }

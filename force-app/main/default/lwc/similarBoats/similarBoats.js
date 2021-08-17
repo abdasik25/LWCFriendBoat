@@ -10,6 +10,7 @@ export default class SimilarBoats extends NavigationMixin(LightningElement) {
     relatedBoats;
     boatId;
     error;
+
     @api
 
     get recordId() {
@@ -23,6 +24,7 @@ export default class SimilarBoats extends NavigationMixin(LightningElement) {
     }
 
     @api similarBy;
+
     @wire(getSimilarBoats, {boatId: '$boatId', similarBy: '$similarBy'})
 
     similarBoats({error, data}) {
@@ -55,7 +57,7 @@ export default class SimilarBoats extends NavigationMixin(LightningElement) {
                 objectApiName: BOAT_OBJECT,
                 actionName: 'view'
             },
-        });
+        });з
 
     }
 

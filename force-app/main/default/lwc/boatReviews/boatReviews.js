@@ -1,7 +1,7 @@
-import { LightningElement, api } from 'lwc';
-import getAllReviews  from '@salesforce/apex/BoatDataService.getAllReviews';
-import { NavigationMixin } from 'lightning/navigation';
-import { refreshApex } from '@salesforce/apex';
+import {LightningElement, api} from 'lwc';
+import getAllReviews from '@salesforce/apex/BoatDataService.getAllReviews';
+import {NavigationMixin} from 'lightning/navigation';
+import {refreshApex} from '@salesforce/apex';
 
 export default class BoatReviews extends NavigationMixin(LightningElement) {
     // Private
@@ -41,16 +41,16 @@ export default class BoatReviews extends NavigationMixin(LightningElement) {
     // sets isLoading to true during the process and false when it’s completed
     // Gets all the boatReviews from the result, checking for errors.
     getReviews() {
-        if(this.boatId == null  || this.boatId == '') {
+        if (this.boatId == null || this.boatId == '') {
             return;
         }
         this.isLoading = true;
         this.error = undefined;
-        getAllReviews({boatId:this.recordId})
-            .then(result=>{
+        getAllReviews({boatId: this.recordId})
+            .then(result => {
                 this.boatReviews = result;
                 this.isLoading = false;
-            }).catch(error=>{
+            }).catch(error => {
             this.error = error.body.message;
         }).finally(() => {
             this.isLoading = false;
